@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.SetPickAndPlacePosition; //throwing an issue here because commands aren't translated yet
+//import frc.robot.commands.SetPickAndPlacePosition; //throwing an issue here because commands aren't translated yet
 import frc.robot.constants.ArmConstants;
 import frc.robot.constants.CommandValues;
 import frc.robot.constants.IntakeConstants;
@@ -65,6 +65,8 @@ public class PickAndPlaceSubsystem extends SubsystemBase {
         static BooleanPublisher coneNT = nt.getBooleanTopic("Cone").publish(); // Both
         static BooleanPublisher highPlaceNT = nt.getBooleanTopic("High Place").publish(); // Place
         static BooleanPublisher visionNT = nt.getBooleanTopic("Vision").publish();
+        private Telemetry() {
+        }
     }
     public PickAndPlaceSubsystem() {
         //intake
@@ -141,6 +143,45 @@ public class PickAndPlaceSubsystem extends SubsystemBase {
         if (!elevatorZeroed) {
             elevatorMotor.setVoltage(ArmConstants.elevatorZeroingVoltage);
         }
+        if(bottomHit)
+        {
+            if (!elevatorZeroed) {
+                elevatorEncoder.setPosition(0.0);
+            }
+            elevatorZeroed = true;
+
+        }
+        else if(topHit)
+        {
+            //elevatorEncoder.position = ArmConstants.elevatorMaxHeight
+        }
+
+        
+
+        // Telemetry setting.
+        Telemetry.elevatorZeroed.set(elevatorZeroed);
+        Telemetry.elbowPosition.set(elbowPositionRadians);
+        Telemetry.elevatorPosition.set(elevatorEncoder.getPosition());
+        Telemetry.elbowVelocity.set(elbowEncoder.getVelocity());
+        Telemetry.bottomHit.set(bottomHit);
+        Telemetry.wristVoltage.set(wristMotor.getBusVoltage());
+        Telemetry.elbowVoltage.set(elbowMotor.getBusVoltage());
+
+        Telemetry.intakeVoltage.set(intakeOneMotor.getBusVoltage());
+        Telemetry.elevatorPosition.set(elevatorPositionMeters);
+        Telemetry.elevatorVelocity.set(elevatorEncoder.getVelocity());
+        Telemetry.wristPosition.set(absoluteWristPosition);
+
+        Telemetry.cubeNT.set(CommandValues.cube);
+        Telemetry.coneNT.set(CommandValues.cone);
+        Telemetry.floorNT.set(CommandValues.floor);
+        Telemetry.chuteNT.set(CommandValues.chute);
+        Telemetry.pickupNT.set(CommandValues.pickup);
+        Telemetry.middlePlaceNT.set(CommandValues.middlePlace);
+        Telemetry.highPlaceNT.set(CommandValues.highPlace);
+        Telemetry.groundNT.set(CommandValues.ground);
+
+        Telemetry.visionNT.set(CommandValues.vision);
         // Rest of the periodic() method, see above
     }
     // Nested class removed, as Java does not support nested static classes.
