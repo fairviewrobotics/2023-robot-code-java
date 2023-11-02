@@ -5,25 +5,22 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-
 /** An example command that uses an example subsystem. */
-public class LEDCommand extends CommandBase {
+public class ExampleCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final LEDSubsystem m_subsystem;
+  private final ExampleSubsystem m_subsystem;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public LEDCommand(LEDSubsystem subsystem) {
+  public ExampleCommand(ExampleSubsystem subsystem) {
     m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
-    
   }
 
   // Called when the command is initially scheduled.
@@ -42,11 +39,5 @@ public class LEDCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }
-
- public void firstcommand(LEDSubsystem subsystem)
-  {
-    subsystem.colorFlash();
-
   }
 }
