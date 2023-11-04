@@ -64,7 +64,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private final NetworkTableUtils limelightTable = new NetworkTableUtils("limelight");
 
     // Convert Gyro angle to radians(-2pi to 2pi)
-    private double heading() {
+    public double heading() {
         return Units.degreesToRadians(-1 * (gyro.getAngle() + 180.0) % 360.0);
     }
 
